@@ -1,5 +1,6 @@
 package br.com.portalconcurso.dto.response;
 
+import br.com.portalconcurso.model.Aprovado;
 import org.springframework.web.multipart.MultipartFile;
 
 public record AprovadoResponseDTO(
@@ -8,6 +9,9 @@ public record AprovadoResponseDTO(
         String email,
         String telefone,
         String concursos,
-        MultipartFile imagem
+        String imagemPath
 ) {
+    public AprovadoResponseDTO(Aprovado aprovado) {
+        this(aprovado.getId(), aprovado.getNome(), aprovado.getEmail(), aprovado.getTelefone(), aprovado.getConcursos(), aprovado.getImagemPath());
+    }
 }

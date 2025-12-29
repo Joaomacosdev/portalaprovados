@@ -1,5 +1,6 @@
 package br.com.portalconcurso.model;
 
+import br.com.portalconcurso.dto.request.AprovadoRequestDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -25,12 +26,14 @@ public class Aprovado {
     public Aprovado() {
     }
 
-    public Aprovado(String nome, String email, String telefone, String concursos, String imagemPath) {
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.concursos = concursos;
-        this.imagemPath = imagemPath;
+
+
+    public Aprovado(AprovadoRequestDTO dto) {
+        this.nome = dto.nome();
+        this.email = dto.email();
+        this.telefone = dto.telefone();
+        this.concursos = dto.concursos();
+        this.imagemPath = dto.imagemPath();
     }
 
     public Long getId() {

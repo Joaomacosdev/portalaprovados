@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.Instant;
 import java.util.Date;
 
 @ControllerAdvice
@@ -71,4 +72,17 @@ public class CustomEntityResponseHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ExceptionResponse> handleBusiness(
+            BusinessException ex) {
+
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                "Operação não pôde ser concluída devido a conflito"
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+    }
 }
