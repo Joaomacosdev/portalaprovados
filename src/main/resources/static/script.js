@@ -45,13 +45,14 @@ form.addEventListener("submit", async (e) => {
       imagemPath: uploadData.fileName,
     };
 
-    const response = await fetch("/api/v1/aprovado", {
+    const response = await fetch("https://seuapp.onrailway.app/api/v1/aprovado", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(aprovado),
     });
+
 
     if (!response.ok) {
       throw new Error("Erro ao cadastrar aprovado");
