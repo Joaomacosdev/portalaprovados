@@ -30,12 +30,12 @@ public class FileController implements FileControllerDoc {
         this.fileStorageService = fileStorageService;
     }
 
-    @PostMapping("/uploadFile")
+    @PostMapping(value = "/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Override
     public ResponseEntity<UploadFileResponseDTO> uploadFile(@RequestParam("file") MultipartFile file) {
         var fileName = fileStorageService.storeFile(file);
         var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/file/v1/downloadFile")
+                .path("/api/file/v1/downloadFile/")
                 .path(fileName)
                 .toUriString();
         return ResponseEntity.ok().body(new UploadFileResponseDTO(fileName, fileDownloadUri, file.getContentType(), file.getSize()));

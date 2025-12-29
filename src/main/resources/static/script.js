@@ -4,7 +4,7 @@ const mensagem = document.getElementById("mensagem");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  mensagem.innerHTML = "Enviando...";
+  mensagem.innerText = "Enviando...";
   mensagem.className = "text-primary text-center";
 
   const nome = document.getElementById("nome").value;
@@ -13,22 +13,29 @@ form.addEventListener("submit", async (e) => {
   const concursos = document.getElementById("concursos").value;
   const imagem = document.getElementById("imagem").files[0];
 
+  if (!imagem) {
+    mensagem.innerText = "Selecione uma imagem.";
+    mensagem.className = "text-danger text-center";
+    return;
+  }
+
   try {
-    // Upload da imagem
+    // 1️⃣ Upload da imagem
     const formData = new FormData();
     formData.append("file", imagem);
 
-    const uploadResponse = await fetch(
-      "http://localhost:8080/api/file/v1/uploadFile",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const uploadResponse = await fetch("/api/file/v1/uploadFile", {
+      method: "POST",
+      body: formData
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error("Erro no upload da imagem");
+    }
 
     const uploadData = await uploadResponse.json();
 
-    // Cadastro do aprovado
+    // 2️⃣ Cadastro do aprovado
     const aprovado = {
       nome,
       email,
@@ -37,7 +44,7 @@ form.addEventListener("submit", async (e) => {
       imagemPath: uploadData.fileName,
     };
 
-    const response = await fetch("http://localhost:8080/api/v1/aprovado", {
+    const response = await fetch("/api/v1/aprovado", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,15 +53,16 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao cadastrar");
+      throw new Error("Erro ao cadastrar aprovado");
     }
 
     mensagem.className = "text-success text-center";
     mensagem.innerText = "Cadastro realizado com sucesso!";
     form.reset();
+
   } catch (error) {
+    console.error(error);
     mensagem.className = "text-danger text-center";
     mensagem.innerText = "Erro ao cadastrar. Verifique os dados.";
-    console.error(error);
   }
 });
