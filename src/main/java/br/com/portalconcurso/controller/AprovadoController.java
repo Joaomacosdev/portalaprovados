@@ -5,13 +5,11 @@ import br.com.portalconcurso.dto.response.AprovadoResponseDTO;
 import br.com.portalconcurso.service.AprovadoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/aprovado")
@@ -28,6 +26,15 @@ public class AprovadoController {
         AprovadoResponseDTO aprovado = aprovadoService.createAprovado(dto);
         URI uri = uriBuilder.path("api/v1/aprovado/{id}").buildAndExpand(aprovado.id()).toUri();
         return ResponseEntity.created(uri).body(aprovado);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AprovadoResponseDTO> getByIdAprovado(@PathVariable Long id){
+        return ResponseEntity.ok().body(aprovadoService.getByIdAprovado(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AprovadoResponseDTO>> getAllAprovado(){
+        return ResponseEntity.ok().body(aprovadoService.getAllAprovados());
     }
 }

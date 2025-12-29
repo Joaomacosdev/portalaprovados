@@ -25,7 +25,7 @@ public record AprovadoRequestDTO(
         @Size(min = 3, max = 100, message = "O concurso deve ter entre 3 e 100 caracteres")
         String concursos,
 
-        @Size(max = 255, message = "O caminho da imagem deve ter no máximo 255 caracteres")
+      //  @Size(max = 255, message = "O caminho da imagem deve ter no máximo 255 caracteres")
         String imagemPath
 ) {
 }
