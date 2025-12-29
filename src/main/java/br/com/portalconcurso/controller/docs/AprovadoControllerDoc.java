@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public interface AprovadoControllerDoc {
             @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
     ResponseEntity<AprovadoResponseDTO> createAprovado(
-            @RequestBody AprovadoRequestDTO dto, UriComponentsBuilder uriComponentsBuilder
+            @Valid @RequestBody AprovadoRequestDTO dto, UriComponentsBuilder uriComponentsBuilder
     );
 
     @Operation(summary = "Buscar aprovado por ID")

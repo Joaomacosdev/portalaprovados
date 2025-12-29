@@ -1,6 +1,7 @@
 package br.com.portalconcurso.controller;
 
 
+import br.com.portalconcurso.controller.docs.FileControllerDoc;
 import br.com.portalconcurso.dto.response.UploadFileResponseDTO;
 import br.com.portalconcurso.service.FileStorageService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/file/v1")
-public class FileController {
+public class FileController implements FileControllerDoc {
 
     private final FileStorageService fileStorageService;
     private static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
@@ -30,6 +31,7 @@ public class FileController {
     }
 
     @PostMapping("/uploadFile")
+    @Override
     public ResponseEntity<UploadFileResponseDTO> uploadFile(@RequestParam("file") MultipartFile file) {
         var fileName = fileStorageService.storeFile(file);
         var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -40,6 +42,7 @@ public class FileController {
     }
 
     @PostMapping("/uploadMultipleFiles")
+    @Override
     public ResponseEntity<List<ResponseEntity<UploadFileResponseDTO>>> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return ResponseEntity.ok().body(Arrays.asList(files)
                 .stream()
@@ -48,6 +51,7 @@ public class FileController {
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")
+    @Override
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
         String contentType = null;
