@@ -24,10 +24,11 @@ form.addEventListener("submit", async (e) => {
     const formData = new FormData();
     formData.append("file", imagem);
 
-   const uploadResponse = await fetch("https://portalaprovados-production.up.railway.app/api/file/v1/uploadFile", {
-     method: "POST",
-     body: formData
-   });
+    const uploadResponse = await fetch("/api/file/v1/uploadFile", {
+        method: "POST",
+        body: formData
+      });
+
 
 
     if (!uploadResponse.ok) {
@@ -45,13 +46,13 @@ form.addEventListener("submit", async (e) => {
       imagemPath: uploadData.fileName,
     };
 
-  const response = await fetch("https://portalaprovados-production.up.railway.app/api/v1/aprovado", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(aprovado),
-  });
+   const response = await fetch("/api/v1/aprovado", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(aprovado),
+      });
 
 
     if (!response.ok) {
