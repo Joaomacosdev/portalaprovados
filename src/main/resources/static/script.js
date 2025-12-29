@@ -24,10 +24,11 @@ form.addEventListener("submit", async (e) => {
     const formData = new FormData();
     formData.append("file", imagem);
 
-    const uploadResponse = await fetch("/api/file/v1/uploadFile", {
+    const uploadResponse = await fetch("https://seuapp.onrailway.app/api/file/v1/uploadFile", {
       method: "POST",
       body: formData
     });
+
 
     if (!uploadResponse.ok) {
       throw new Error("Erro no upload da imagem");
