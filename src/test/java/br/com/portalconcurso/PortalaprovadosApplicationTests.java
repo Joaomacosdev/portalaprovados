@@ -1,4 +1,4 @@
-package br.com.portalconcurso.portalaprovados;
+package br.com.portalconcurso;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
